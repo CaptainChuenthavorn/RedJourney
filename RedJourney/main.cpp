@@ -1,23 +1,20 @@
 #include <SFML/Graphics.hpp>
-
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(1080, 720), "Frist Red journey");
-
-	////// Circle
-	sf::CircleShape collision(100.f);
-	collision.setPosition({ 200.f, 200.f });
-	collision.setFillColor(sf::Color::Red);
-
+	sf::RenderWindow window(sf::VideoMode(1080, 720), "Red Journey");
+	sf::CircleShape shape(188.f);
+	shape.setFillColor(sf::Color::Green);
 	while (window.isOpen())
 	{
-		window.draw(collision);
-		window.display();
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+		sf::Event event;
+		while (window.pollEvent(event))
 		{
-			window.close();
+			if (event.type == sf::Event::Closed)
+				window.close();
 		}
 		window.clear();
+		window.draw(shape);
+		window.display();
 	}
 	return 0;
 }
