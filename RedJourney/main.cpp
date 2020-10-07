@@ -4,16 +4,16 @@
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(1080, 720),"Red Adventure",sf::Style::Close|sf::Style::Resize);
-	sf::RectangleShape player(sf::Vector2f(384.0, 384.0));
-	player.setPosition(250.0f, 100.0f);
+	sf::RectangleShape player(sf::Vector2f(288.0, 288.0));
+	player.setPosition(280.0f, 150.0f);
 	//player.setFillColor(sf::Color::Red);
 	sf::Texture playerTexture;
 	//playerTexture.loadFromFile("MG.jpg");
 	
-	playerTexture.loadFromFile("Woodcutter_walk.PNG");
-	//playerTexture.loadFromFile("WALK_RUN.PNG");
+	//playerTexture.loadFromFile("Woodcutter_walk.PNG");
+	playerTexture.loadFromFile("WALK_RUN.PNG");
 	player.setTexture(&playerTexture);
-	animation Animation(&playerTexture, sf::Vector2u(6, 1), 0.3f);
+	animation Animation(&playerTexture, sf::Vector2u(6, 2),0.3f);
 	sf::Vector2u textureSize = playerTexture.getSize();
 	/*textureSize.x /= 6;
 	//textureSize.y /= 2;
@@ -61,7 +61,7 @@ int main()
 		}*/
 		Animation.Update(0,deltaTime);
 		player.setTextureRect(Animation.uvRect);
-		window.clear();
+		window.clear(sf::Color(150,150,150));
 		window.draw(player);
 		window.display();
 
