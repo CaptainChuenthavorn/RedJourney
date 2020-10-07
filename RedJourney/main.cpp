@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "animation.h"
 int main()
 {
 	sf::RenderWindow window(sf::VideoMode(1080, 720),"Red Adventure",sf::Style::Close|sf::Style::Resize);
@@ -9,17 +10,20 @@ int main()
 	sf::Texture playerTexture;
 	//playerTexture.loadFromFile("MG.jpg");
 	
-		playerTexture.loadFromFile("Woodcutter_walk.PNG");
+	playerTexture.loadFromFile("Woodcutter_walk.PNG");
 	//playerTexture.loadFromFile("WALK_RUN.PNG");
 	player.setTexture(&playerTexture);
+	animation Animation(&playerTexture, sf::Vector2u(6, 1), 0.3f);
 	sf::Vector2u textureSize = playerTexture.getSize();
-	textureSize.x /= 6;
+	/*textureSize.x /= 6;
 	//textureSize.y /= 2;
 	player.setTextureRect(sf::IntRect(textureSize.x*0, textureSize.y*0, textureSize.x, textureSize.y));
-	
+	*/
 	//player.setOrigin(50.0f, 50.0f);
+	float deltaTime=0.0f;
+	sf::Clock clock;
 	while (window.isOpen()) {
-
+		deltaTime = clock.restart().asSeconds();
 		sf::Event evnt;
 		while (window.pollEvent(evnt)) {
 			switch (evnt.type) {
@@ -55,6 +59,8 @@ int main()
 			sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 			player.setPosition((float)mousePos.x, static_cast<float>(mousePos.y));
 		}*/
+		Animation.Update(0,deltaTime);
+		player.setTextureRect(Animation.uvRect);
 		window.clear();
 		window.draw(player);
 		window.display();
