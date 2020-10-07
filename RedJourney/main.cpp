@@ -4,8 +4,12 @@ int main()
 {
 	sf::RenderWindow window(sf::VideoMode(1080, 720),"Red Adventure",sf::Style::Close|sf::Style::Resize);
 	sf::RectangleShape player(sf::Vector2f(100.0, 100.0));
-	player.setFillColor(sf::Color::Red);
-	player.setOrigin(50.0f, 50.0f);
+	player.setPosition(250.0f, 100.0f);
+	//player.setFillColor(sf::Color::Red);
+	sf::Texture playerTexture;
+	playerTexture.loadFromFile("MG.jpg");
+	player.setTexture(&playerTexture);
+	//player.setOrigin(50.0f, 50.0f);
 	while (window.isOpen()) {
 
 		sf::Event evnt;
@@ -27,7 +31,7 @@ int main()
 				window.close();
 			}*/
 		}
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
+		/*if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
 			player.move(-0.1f, 0.0f);
 		}
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
@@ -42,7 +46,7 @@ int main()
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 			sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 			player.setPosition((float)mousePos.x, static_cast<float>(mousePos.y));
-		}
+		}*/
 		window.clear();
 		window.draw(player);
 		window.display();
