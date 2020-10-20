@@ -9,7 +9,7 @@ public:
 	
 	void Update(float deltaTime);
 	void Draw(sf::RenderWindow& widow);
-
+	sf::Vector2f GetPosition() {return body.getPosition();}
 private:
 	sf::RectangleShape body;
 	animation animation;
