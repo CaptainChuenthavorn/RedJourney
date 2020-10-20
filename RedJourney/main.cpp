@@ -35,8 +35,6 @@ int main()
 				break;
 			}
 		}
-
-	
 	Player.Update(deltaTime);
 	view.setCenter(Player.GetPosition()); // must follow Update
 	window.clear(sf::Color(150, 200, 200));
