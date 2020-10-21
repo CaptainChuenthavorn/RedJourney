@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Player.h"
+#include "Platform.h"
 static const float VIEW_HEIGHT = 720.0f;
 
 static const float VIEW_WIDTH = 1080.0f;
@@ -15,7 +16,10 @@ int main()
 	sf::Texture playerTexture;
 	playerTexture.loadFromFile("WALK_RUN.PNG");
 
-	Player Player(&playerTexture, sf::Vector2u(6, 2), 0.3f, 100.0f);
+	Player player(&playerTexture, sf::Vector2u(6, 2), 0.3f, 100.0f);
+	
+	Platform platform1(nullptr, sf::Vector2f(400.0f, 200.f), sf::Vector2f(500.0f, 200.0f));
+	Platform platform2(nullptr, sf::Vector2f(400.0f, 200.f), sf::Vector2f(500.0f, 0.0f));
 	float deltaTime = 0.0f;
 	sf::Clock clock;
 
@@ -30,16 +34,23 @@ int main()
 				window.close();
 				break;
 			case sf::Event::Resized:
-				//ResizeView(window, view);
+				ResizeView(window, view);
 			
 				break;
 			}
 		}
-	Player.Update(deltaTime);
-	view.setCenter(Player.GetPosition()); // must follow Update
+	player.Update(deltaTime);
+	Collider playerCollision = player.GetCollider();
+
+	platform1.GetCollider().CheckCollision(playerCollision, 0.0f);
+
+	platform2.GetCollider().CheckCollision(playerCollision, 1.0f);
+	view.setCenter(player.GetPosition()); // must follow Update
 	window.clear(sf::Color(150, 200, 200));
 	window.setView(view);
-	Player.Draw(window);
+	player.Draw(window);
+	platform1.Draw(window);
+	platform2.Draw(window);
 	window.display();
 	}
 	return 0;
