@@ -15,7 +15,6 @@ int main()
 	sf::Texture playerTexture;
 	playerTexture.loadFromFile("WALK_RUN.PNG");
 
-
 	Player Player(&playerTexture, sf::Vector2u(6, 2), 0.3f, 100.0f);
 	float deltaTime = 0.0f;
 	sf::Clock clock;
@@ -31,7 +30,8 @@ int main()
 				window.close();
 				break;
 			case sf::Event::Resized:
-				ResizeView(window, view);
+				//ResizeView(window, view);
+			
 				break;
 			}
 		}
