@@ -10,7 +10,7 @@ Player::Player(sf::Texture* texture, sf::Vector2u imageCount, float switchTime,f
 	body.setOrigin(body.getSize() / 2.0f);
 	body.setPosition(280.0f, 150.0f);
 	body.setTexture(texture);
-
+	body.setFillColor(sf::Color::Red);
 
 }
 Player::~Player() {
@@ -71,5 +71,6 @@ void Player::OnCollision(sf::Vector2f direction)
 	else if (direction.y > 0.0f) {
 		//collision on the top
 		velocity.y = 0.0f;
+		//canJump = true;
 	}
 }

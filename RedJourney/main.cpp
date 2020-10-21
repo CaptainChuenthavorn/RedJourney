@@ -15,7 +15,8 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(1080, 720), "Red Adventure", sf::Style::Close | sf::Style::Resize);
 	sf::View view(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(VIEW_WIDTH, VIEW_HEIGHT));
 	sf::Texture playerTexture;
-	playerTexture.loadFromFile("WALK_RUN.PNG");
+	
+	//playerTexture.loadFromFile("WALK_RUN.PNG");
 	
 	//playerTexture.loadFromFile("WALK_RUN_RedStroke.PNG");
 	Player player(&playerTexture, sf::Vector2u(6, 2), 0.5f, 100.0f,200.0f);
@@ -24,9 +25,9 @@ int main()
 	//Ground
 	platforms.push_back(Platform(nullptr, sf::Vector2f(400.0f, 25.0f), sf::Vector2f(500.0f, 120.0f)));
 	platforms.push_back(Platform(nullptr, sf::Vector2f(400.0f, 25.0f), sf::Vector2f(800.0f, 300.0f)));
-	platforms.push_back(Platform(nullptr, sf::Vector2f(1000.0f, 200.0f), sf::Vector2f(500.0f, 500.0f)));
-	//Platform platform1(nullptr, sf::Vector2f(400.0f, 200.f), sf::Vector2f(500.0f, 200.0f));
-	//Platform platform2(nullptr, sf::Vector2f(400.0f, 200.f), sf::Vector2f(500.0f, 0.0f));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(10000.0f, 200.0f), sf::Vector2f(500.0f, 500.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(200.0f, 200.0f), sf::Vector2f(100.0f, 400.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(200.0f, 200.0f), sf::Vector2f(0.0f, 0.0f)));
 	//Platform platform3(nullptr, sf::Vector2f(1000.0f, 200.f), sf::Vector2f(500.0f, 500.0f));
 	float deltaTime = 0.0f;
 	
@@ -60,16 +61,11 @@ int main()
 	for (Platform& platform : platforms)// == for(int i =0 ; i<platforms.size();i++)
 		if (platform.GetCollider().CheckCollision(player.GetCollider(), direction, 1.0f))
 			player.OnCollision(direction);
-	//Collider playerCollision = player.GetCollider();
-	/*
-	platform1.GetCollider().CheckCollision(playerCollision, 0.0f);
-	platform2.GetCollider().CheckCollision(playerCollision, 1.0f);*/
+	
 	view.setCenter(player.GetPosition()); // must follow Update
 	window.clear(sf::Color(150, 200, 200));
 	window.setView(view);
 	player.Draw(window);
-	/*platform1.Draw(window);
-	platform2.Draw(window);*/
 	for (Platform& platform : platforms)
 		platform.Draw(window);
 	window.display();
