@@ -16,13 +16,14 @@ int main()
 	sf::View view(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(VIEW_WIDTH, VIEW_HEIGHT));
 	sf::Texture playerTexture;
 	playerTexture.loadFromFile("WALK_RUN.PNG");
-
-	Player player(&playerTexture, sf::Vector2u(6, 2), 0.3f, 100.0f,200.0f);
+	
+	//playerTexture.loadFromFile("WALK_RUN_RedStroke.PNG");
+	Player player(&playerTexture, sf::Vector2u(6, 2), 0.5f, 100.0f,200.0f);
 	
 	std::vector<Platform> platforms;
 	//Ground
-	platforms.push_back(Platform(nullptr, sf::Vector2f(400.0f, 200.0f), sf::Vector2f(500.0f, 200.0f)));
-	platforms.push_back(Platform(nullptr, sf::Vector2f(400.0f, 200.0f), sf::Vector2f(500.0f, 0.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(400.0f, 25.0f), sf::Vector2f(500.0f, 120.0f)));
+	platforms.push_back(Platform(nullptr, sf::Vector2f(400.0f, 25.0f), sf::Vector2f(800.0f, 300.0f)));
 	platforms.push_back(Platform(nullptr, sf::Vector2f(1000.0f, 200.0f), sf::Vector2f(500.0f, 500.0f)));
 	//Platform platform1(nullptr, sf::Vector2f(400.0f, 200.f), sf::Vector2f(500.0f, 200.0f));
 	//Platform platform2(nullptr, sf::Vector2f(400.0f, 200.f), sf::Vector2f(500.0f, 0.0f));
@@ -60,10 +61,8 @@ int main()
 		if (platform.GetCollider().CheckCollision(player.GetCollider(), direction, 1.0f))
 			player.OnCollision(direction);
 	//Collider playerCollision = player.GetCollider();
-
 	/*
 	platform1.GetCollider().CheckCollision(playerCollision, 0.0f);
-
 	platform2.GetCollider().CheckCollision(playerCollision, 1.0f);*/
 	view.setCenter(player.GetPosition()); // must follow Update
 	window.clear(sf::Color(150, 200, 200));
