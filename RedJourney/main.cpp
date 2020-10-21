@@ -28,10 +28,13 @@ int main()
 	//Platform platform2(nullptr, sf::Vector2f(400.0f, 200.f), sf::Vector2f(500.0f, 0.0f));
 	//Platform platform3(nullptr, sf::Vector2f(1000.0f, 200.f), sf::Vector2f(500.0f, 500.0f));
 	float deltaTime = 0.0f;
+	
 	sf::Clock clock;
 
 	while (window.isOpen()) {
 		deltaTime = clock.restart().asSeconds();
+		if (deltaTime > 1.0f / 20.0f)
+			deltaTime = 1.0f / 20.0f;
 		sf::Event evnt;
 		while (window.pollEvent(evnt))
 		{
