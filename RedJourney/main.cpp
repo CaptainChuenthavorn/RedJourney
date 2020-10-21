@@ -4,7 +4,6 @@
 #include "Player.h"
 #include "Platform.h"
 static const float VIEW_HEIGHT = 720.0f;
-
 static const float VIEW_WIDTH = 1080.0f;
 void ResizeView(const sf::RenderWindow& window, sf::View& view) {
 	float aspectRatio = float(window.getSize().x) / float(window.getSize().y);
@@ -28,7 +27,6 @@ int main()
 	platforms.push_back(Platform(nullptr, sf::Vector2f(10000.0f, 200.0f), sf::Vector2f(500.0f, 500.0f)));
 	platforms.push_back(Platform(nullptr, sf::Vector2f(200.0f, 200.0f), sf::Vector2f(100.0f, 400.0f)));
 	platforms.push_back(Platform(nullptr, sf::Vector2f(200.0f, 200.0f), sf::Vector2f(0.0f, 0.0f)));
-	//Platform platform3(nullptr, sf::Vector2f(1000.0f, 200.f), sf::Vector2f(500.0f, 500.0f));
 	float deltaTime = 0.0f;
 	
 	sf::Clock clock;
