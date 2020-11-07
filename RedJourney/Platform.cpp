@@ -1,4 +1,5 @@
 #include "Platform.h"
+
 Platform::Platform(sf::Texture* texture, sf::Vector2f size, sf::Vector2f position)
 {
 	body.setSize(size);
@@ -10,7 +11,7 @@ Platform::~Platform()
 {
 
 }
-void Platform::Draw(sf::RenderWindow& window)
+void Platform::Draw(sf::RenderWindow& window)// ( ) resive value == window
 {
 	window.draw(body);
 }

@@ -8,7 +8,7 @@ public:
 	~Platform();
 	void Draw(sf::RenderWindow& window);
 	Collider GetCollider() { return Collider(body); }
-
+//  class                             rectangle
 private:
 		sf::RectangleShape body;
 };
