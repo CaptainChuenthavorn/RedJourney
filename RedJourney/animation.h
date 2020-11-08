@@ -1,5 +1,7 @@
 #pragma once
 #include <SFML\Graphics.hpp>
+//enum Player_Animate_State { idle = 0, run, fall, idleWithSword, attack1, attack2, attack3, hurt, drawSword, keepSword, jump };
+
 class animation
 {
 public://  import texture to get size  /No. of row and column/ how long we want each part take
@@ -11,9 +13,30 @@ public://  import texture to get size  /No. of row and column/ how long we want 
 public:
 	sf::IntRect uvRect;
 
-private:
-	sf::Vector2u imageCount;
+	//run, fall, idleWithSword, attack1, attack2, attack3, hurt, drawSword, keepSword, jump
+	bool idle = true;
+	bool run = false;
+	bool jump = false;
+	bool attack1 = false;
+	bool attack2 = false;
+	bool attack3 = false;
+	bool hurt = false;
+	bool drawSword = false;
+	bool keepSword = false;
+
+	//enemy
+	bool enemyWalk = true;
+	sf::Clock cl;
+	float anicl;
+
 	sf::Vector2u currentImage;
+	sf::Vector2u imageCount;
+
 	float totalTime;
 	float switchTime;
+private:
+	
+
+	
+
 };

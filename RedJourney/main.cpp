@@ -5,6 +5,7 @@
 #include "Background.h"
 #include "Player.h"
 #include "Platform.h"
+#include "enemy.h"
 static const float VIEW_HEIGHT = 720.0f;
 static const float VIEW_WIDTH = 1080.0f;
 void ResizeView(const sf::RenderWindow& window, sf::View& view) {
@@ -19,7 +20,13 @@ int main()
 	bound.setPosition(350.0f, 250.0f);
 	bound.setFillColor(sf::Color::Red);
 
-	sf::Texture bgTexture[2];
+	sf::RectangleShape boundE;
+	boundE.setSize(sf::Vector2f(100.0, 74.0));
+	boundE.setOrigin(boundE.getSize() / 2.0f);
+	boundE.setPosition(350.0f, 250.0f);
+	boundE.setFillColor(sf::Color::Green);
+
+	sf::Texture bgTexture[4];
 	bgTexture[0].loadFromFile("asset/CloudsBack.png");
 	bgTexture[1].loadFromFile("asset/CloudsFront.png");
 	bgTexture[2].loadFromFile("asset/BGBack.png");
@@ -28,8 +35,8 @@ int main()
 	std::vector<Background> backgrounds;
 	backgrounds.push_back(Background(&bgTexture[0], -5.f));
 	backgrounds.push_back(Background(&bgTexture[1], -10.f));
-	//backgrounds.push_back(Background(&bgTexture[2], -15.f));
-	//backgrounds.push_back(Background(&bgTexture[3], -20.f));
+	backgrounds.push_back(Background(&bgTexture[2], -15.f));
+	backgrounds.push_back(Background(&bgTexture[3], -20.f));
 	sf::RenderWindow window(sf::VideoMode(1080, 720), "Red Adventure", sf::Style::Close | sf::Style::Resize);
 	sf::View view(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(VIEW_WIDTH, VIEW_HEIGHT));
 	
@@ -37,8 +44,13 @@ int main()
 	//playerTexture.loadFromFile("asset/Adventurer/Individual Sprites/adventurer-idle-00.PNG");
 	playerTexture.loadFromFile("asset/v2.1/adventurer-1.3-Sheet.PNG");
 	//playerTexture.loadFromFile("WALK_RUN_RedStroke.PNG");
-	Player player(&playerTexture, sf::Vector2u(8,12), 0.5f, 100.0f,200.0f);
+	Player player(&playerTexture, sf::Vector2u(8,12), 0.1f, 100.0f,100.0f);
 	
+	sf::Texture enemyTexture;
+	enemyTexture.loadFromFile("asset/16x16 knight 4 v3.PNG");
+	enemy enemy(&enemyTexture, sf::Vector2u(8,8), 0.2f, 100.0f);
+
+
 	std::vector<Platform> platforms;
 	//Ground
 	platforms.push_back(Platform(nullptr, sf::Vector2f(400.0f, 25.0f), sf::Vector2f(1000.0f, 400.0f)));
@@ -74,11 +86,19 @@ int main()
 			}
 		}
 		player.Update(deltaTime);
+		enemy.Update(deltaTime);
 		sf::Vector2f direction;
+		//player collider
 		for (Platform& platform : platforms)// == for(int i =0 ; i<platforms.size();i++)
 		if ( platform.GetCollider().CheckCollision ( player.GetCollider(), direction, 1.0f )  ) 
 			player.OnCollision(direction);
-	
+		
+		//enemy collider
+		for (Platform& platform : platforms)
+		if (platform.GetCollider().CheckCollision(enemy.GetCollider(), direction, 1.0f))
+			enemy.OncollisionEnemy(direction);
+
+
 		view.setCenter(player.GetPosition()); // must follow Update
 
 		for (Background& background : backgrounds)
@@ -87,13 +107,21 @@ int main()
 		window.clear(sf::Color(150, 200, 200));
 		
 		bound.setPosition(player.GetPosition ().x, player.GetPosition().y);
+		
+		boundE.setPosition(enemy.GetPosition().x, enemy.GetPosition().y);
+
 		for (Background& background : backgrounds)
 			background.Draw(window);
+		//set view
 		window.setView(view);
-		//window.draw(bound);
+		window.draw(bound);
+		window.draw(boundE);
 		player.Draw(window);
+		enemy.Draw(window);
+		//platform
 		for (Platform& platform : platforms)
 		platform.Draw(window);
+
 		window.display();
 	 }
 	return 0;

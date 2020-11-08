@@ -2,7 +2,6 @@
 #include <SFML\Graphics.hpp>
 #include "animation.h"
 #include "Collider.h"
-enum Player_Animate_State { idle=0, run, fall, idleWithSword, attack1, attack2, attack3, hurt, drawSword, keepSword, jump };
 class Player
 {
 public:
@@ -17,8 +16,11 @@ public:
 
 
 private:
+	sf::Clock aniCl;
+	float animaCl;
 	sf::RectangleShape bound;
 	sf::RectangleShape body;
+	sf::RectangleShape hitbox;
 	animation animation;
 	unsigned int row;
 	float speed;

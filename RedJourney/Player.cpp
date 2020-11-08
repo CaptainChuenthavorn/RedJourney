@@ -11,7 +11,10 @@ Player::Player(sf::Texture* texture, sf::Vector2u imageCount, float switchTime,f
 	body.setPosition(350.0f, 250.0f);
 	body.setTexture(texture);
 
-	//body.setFillColor(sf::Color::Red);
+	hitbox.setSize(sf::Vector2f(44.0, 58.0));
+	hitbox.setOrigin(hitbox.getSize() / 2.0f);
+	hitbox.setPosition(body.getPosition());
+	hitbox.setFillColor(sf::Color::Blue);
 
 }
 Player::~Player() {
@@ -20,36 +23,84 @@ Player::~Player() {
 
 void Player::Update(float deltaTime)
 {
+	hitbox.setPosition(body.getPosition().x, body.getPosition().y);
 	//printf("%s\n", canJump ? "true" : "false");
 	
 	velocity.x *= 0.8f; // 0.2 slow 0.8 fast 
-
+	animation.idle = true;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{ 
 		row = 1;
 		velocity.x -= speed;
-		
+		animation.run = true;
+		animation.idle = false;
+		animation.jump = false;
+		animation.attack1 = false;
+
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
-		row = 1;
+		row = 2;
 		velocity.x += speed;
-	
+		animation.run = true;
+		animation.idle = false;
+		animation.jump = false;
+		animation.attack1 = false;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+		//animation.anicl= aniCl.getElapsedTime().asMilliseconds();
+		//printf("%f\n", animaCl);
+		
+			animation.currentImage.y = 2;
+
+			animation.run = false;
+			animation.idle = false;
+			animation.attack1 = false;
+			animation.jump = true;
+		
+		//animation.currentImage.x = 4;
+		
+		
+
+
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && canJump)
 	{
-		row = 2;
-
+		
+		/*animation.currentImage.y = 2;
+		
+		animation.run = false;
+		animation.idle = false;
+		animation.attack1 = false;
+		
+		animation.jump = true;*/
+		//printf("    %s\n", animation.jump ? "true" : "false");
+		
+		
 		canJump = false;
 		velocity.y = -sqrtf(2.0f * 981.0f * jumpHeight);
+
 		//square root (2.0f * gravity * jumpHeight)
 
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::K))
+	{
+		//printf("    %s\n", animation.attack1 ? "true" : "false");
+		//row = 5;
+		animation.currentImage.y = 5;
+		//velocity.x += speed;
+		animation.run = false;
+		animation.idle = false;
+		animation.jump = false;
+		animation.attack1 = true;
+		
 	}
 	
 	velocity.y += 981.0f * deltaTime;
 	if(velocity.x == 0.0f) 
 	{
-		row = 0;
+		row = 0; // idle
 		if (imageCount.x >= 3)
 			imageCount.x = 0;
 	}
@@ -67,20 +118,24 @@ void Player::Update(float deltaTime)
 
 void Player::Draw(sf::RenderWindow& window)
 {
+	window.draw(hitbox);
 	window.draw(body);
+	
 }
 
 void Player::OnCollision(sf::Vector2f direction)
 {
-	printf("direction y =%f", direction.y);
-	printf("    %s\n", canJump ? "true" : "false");
+	//printf("direction y =%f", direction.y);
+	//printf("    %s\n", canJump ? "true" : "false");
 	if (direction.x < 0.0f) { 
 		//collision on the left
 		velocity.x = 0.0f;
+		canJump = true;
 	}
 	else if (direction.x > 0.0f) {
 		//collision on the right
 		velocity.x = 0.0f;
+		canJump = true;
 	}
 	if (direction.y <= 0.0f) {
 		//collision on the bottom
