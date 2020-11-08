@@ -1,4 +1,4 @@
-#include "Player.h"
+﻿#include "Player.h"
 Player::Player(sf::Texture* texture, sf::Vector2u imageCount, float switchTime,float speed, float jumpHeight) :
 	animation(texture,imageCount,switchTime)/* to get animation class*/
 {
@@ -11,7 +11,12 @@ Player::Player(sf::Texture* texture, sf::Vector2u imageCount, float switchTime,f
 	body.setPosition(350.0f, 250.0f);
 	body.setTexture(texture);
 
-	hitbox.setSize(sf::Vector2f(44.0, 58.0));
+
+	hitboxAttack.setSize(sf::Vector2f(44.0f + 28.0f, 58.0f));
+	hitboxAttackRight.setSize(sf::Vector2f(44.0f + 28.0f, 58.0f));
+	hitboxSize.setSize(sf::Vector2f(44.0f, 58.0f));
+	
+	hitbox.setSize(hitboxSize.getSize());
 	hitbox.setOrigin(hitbox.getSize() / 2.0f);
 	hitbox.setPosition(body.getPosition());
 	hitbox.setFillColor(sf::Color::Blue);
@@ -23,7 +28,9 @@ Player::~Player() {
 
 void Player::Update(float deltaTime)
 {
+	hitbox.setSize(hitboxSize.getSize());
 	hitbox.setPosition(body.getPosition().x, body.getPosition().y);
+	hitbox.setOrigin(hitbox.getSize() / 2.0f);
 	//printf("%s\n", canJump ? "true" : "false");
 	
 	velocity.x *= 0.8f; // 0.2 slow 0.8 fast 
@@ -49,35 +56,15 @@ void Player::Update(float deltaTime)
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
-		//animation.anicl= aniCl.getElapsedTime().asMilliseconds();
-		//printf("%f\n", animaCl);
-		
 			animation.currentImage.y = 2;
-
 			animation.run = false;
 			animation.idle = false;
 			animation.attack1 = false;
 			animation.jump = true;
-		
-		//animation.currentImage.x = 4;
-		
-		
-
 
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && canJump)
 	{
-		
-		/*animation.currentImage.y = 2;
-		
-		animation.run = false;
-		animation.idle = false;
-		animation.attack1 = false;
-		
-		animation.jump = true;*/
-		//printf("    %s\n", animation.jump ? "true" : "false");
-		
-		
 		canJump = false;
 		velocity.y = -sqrtf(2.0f * 981.0f * jumpHeight);
 
@@ -86,6 +73,22 @@ void Player::Update(float deltaTime)
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::K))
 	{
+		printf("%s\n", faceRight ? "true" : "false");
+		if (faceRight == false) // หันขวา
+		{
+			hitbox.setSize(sf::Vector2f(44.0f + 28.0f, 58.0f));
+			hitbox.setPosition(body.getPosition().x - 28.0f,body.getPosition().y);
+			//hitbox.setPosition(body.getSize().x, body.getSize().y);
+		}
+		else if (faceRight == true)  // หันซ้าย
+		{
+
+			
+			hitbox.setSize(sf::Vector2f(44.0f + 28.0f, 58.0f));
+		
+			//hitbox.setPosition(hitboxAttack.getSize().x , hitboxAttack.getSize().y);
+			//hitbox.setOrigin(sf::Vector2f(30.0f, 29.0f));
+		}
 		//printf("    %s\n", animation.attack1 ? "true" : "false");
 		//row = 5;
 		animation.currentImage.y = 5;
@@ -114,6 +117,7 @@ void Player::Update(float deltaTime)
 	animation.Update(row, deltaTime, faceRight);
 	body.setTextureRect(animation.uvRect);
 	body.move(velocity*deltaTime);
+	hitbox.move(velocity * deltaTime);
 }
 
 void Player::Draw(sf::RenderWindow& window)

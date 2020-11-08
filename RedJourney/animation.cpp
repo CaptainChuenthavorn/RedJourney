@@ -94,7 +94,7 @@ void animation::Update(int row, float deltaTime, bool faceRight)
 		
 		if (totalTime >= switchTime) // for smooth frame
 		{
-			printf("%d    %d\n", currentImage.x, currentImage.y);
+			//printf("%d    %d\n", currentImage.x, currentImage.y);
 			totalTime -= switchTime;
 			currentImage.x++;
 		

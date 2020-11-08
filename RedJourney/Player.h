@@ -14,6 +14,7 @@ public:
 	sf::Vector2f GetPosition() {return body.getPosition();}
 	Collider GetCollider() { return Collider(body); }
 
+	unsigned int hp = 3;
 
 private:
 	sf::Clock aniCl;
@@ -29,5 +30,9 @@ private:
 	sf::Vector2f velocity;
 	bool canJump;
 	float jumpHeight;
+	
+	sf::RectangleShape hitboxAttackRight;
+	sf::RectangleShape hitboxAttack;
+	sf::RectangleShape hitboxSize;
 
 };

@@ -14,16 +14,20 @@ public :
 	sf::Vector2f GetPosition() { return body.getPosition(); }
 	Collider GetCollider() { return Collider(body); }
 
+	unsigned int hp = 1;
+
 private: 
 	sf::Clock cl;
 	float enycl;
 	sf::RectangleShape bound;
 	sf::RectangleShape body;
+	sf::RectangleShape hitbox;
 	animationEnemy animationEnemy;
 	unsigned int row;
 	float speed;
 	bool faceRight;
 	sf::Vector2u imageCount;
 	sf::Vector2f velocity;
+	
 };
 

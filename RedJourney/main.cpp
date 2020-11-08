@@ -69,8 +69,8 @@ int main()
 	
 	while (window.isOpen()) {
 		deltaTime = clock.restart().asSeconds();
-		if (deltaTime > 1.0f / 20.0f)
-			deltaTime = 1.0f / 20.0f;
+		if (deltaTime > 1.0f / 60.0f)
+			deltaTime = 1.0f / 60.0f;
 		sf::Event evnt;
 		while (window.pollEvent(evnt))
 		{
@@ -85,43 +85,50 @@ int main()
 				break;
 			}
 		}
+		//player && enemy Update
 		player.Update(deltaTime);
 		enemy.Update(deltaTime);
+
+		//player collider with platform
 		sf::Vector2f direction;
-		//player collider
 		for (Platform& platform : platforms)// == for(int i =0 ; i<platforms.size();i++)
 		if ( platform.GetCollider().CheckCollision ( player.GetCollider(), direction, 1.0f )  ) 
 			player.OnCollision(direction);
 		
-		//enemy collider
+		//enemy collider with platform
 		for (Platform& platform : platforms)
 		if (platform.GetCollider().CheckCollision(enemy.GetCollider(), direction, 1.0f))
 			enemy.OncollisionEnemy(direction);
 
+		//setview (must follow Update)
+		view.setCenter(player.GetPosition());  
 
-		view.setCenter(player.GetPosition()); // must follow Update
-
+		//set background slide
 		for (Background& background : backgrounds)
 			background.Update(deltaTime);
 
 		window.clear(sf::Color(150, 200, 200));
 		
+		//bound around player && enemy
 		bound.setPosition(player.GetPosition ().x, player.GetPosition().y);
-		
 		boundE.setPosition(enemy.GetPosition().x, enemy.GetPosition().y);
-
+		
+		//Draw bg
 		for (Background& background : backgrounds)
 			background.Draw(window);
+
 		//set view
 		window.setView(view);
 		window.draw(bound);
 		window.draw(boundE);
 		player.Draw(window);
 		enemy.Draw(window);
-		//platform
+
+		//draw platforms
 		for (Platform& platform : platforms)
 		platform.Draw(window);
 
+		//display
 		window.display();
 	 }
 	return 0;

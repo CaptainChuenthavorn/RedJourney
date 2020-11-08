@@ -12,6 +12,11 @@ enemy::enemy(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, fl
 	body.setPosition(600.0f, 600.0f);
 	body.setTexture(texture);
 	
+
+	hitbox.setSize(sf::Vector2f(30.0, 48.0));
+	hitbox.setOrigin(hitbox.getSize() / 2.0f);
+	hitbox.setPosition(body.getPosition());
+	hitbox.setFillColor(sf::Color::Yellow);
 }
 
 enemy::~enemy()
@@ -20,20 +25,22 @@ enemy::~enemy()
 
 void enemy::Update(float deltaTime)
 {
+	hitbox.setPosition(body.getPosition().x, body.getPosition().y);
 	animationEnemy.idle = true;
 	velocity.x *= 0.8f; // 0.2 slow 0.8 fast 
 	velocity.y += 981.0f * deltaTime;
 	//velocity.x += speed;
 	enycl = cl.getElapsedTime().asSeconds();
 	printf("%f\n", enycl);
-	if (enycl >= 0)
-	{
-		velocity.x -= speed;	
-	}
 	if (enycl >= 2)
 	{
-		velocity.x += speed;
+		velocity.x += speed;	
+	}
+	else if (enycl >= 5)
+	{
+		velocity.x -= speed;
 		cl.restart();
+		enycl = 0.0f;
 	}
 	
 	if (velocity.x == 0.0f)
@@ -56,6 +63,7 @@ void enemy::Update(float deltaTime)
 
 void enemy::Draw(sf::RenderWindow& window)
 {
+	window.draw(hitbox);
 	window.draw(body);
 }
 
