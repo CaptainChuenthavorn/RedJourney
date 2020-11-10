@@ -1,4 +1,4 @@
-#include "animation.h"
+﻿#include "animation.h"
 
 
 animation::animation(sf::Texture* texture, sf::Vector2u imageCount, float switchTime) {
@@ -100,7 +100,7 @@ void animation::Update(int row, float deltaTime, bool faceRight)
 		
 			if (currentImage.x >= 8) {
 			
-				currentImage.x = 7;
+				currentImage.x = 0;
 			}
 		
 		}
@@ -115,31 +115,47 @@ void animation::Update(int row, float deltaTime, bool faceRight)
 		}
 	}
 
-	else if (attack1 == true)
+	else if (attack1 == true )
 	{
-	
-		totalTime += deltaTime;
 		
-		if (totalTime >= switchTime) // for smooth frame
-		{
-			//printf("    %d\n", currentImage.x);
-			
-			totalTime -= switchTime;
-			currentImage.x++;
-			
-			if (currentImage.x >= 8) {
-				currentImage.x = 2;
+		//if (cl.getElapsedTime().asMilliseconds() >= 100)
+		//{
+			totalTime += deltaTime;
+
+			if (totalTime >= switchTime) // for smooth frame
+			{
+				//printf("    %d\n", currentImage.x);
+				
+				totalTime -= switchTime;
+				currentImage.x++;
+
+				if (currentImage.x >= 8) {
+					currentImage.x = 2;
+					finishAttack1 = true;
+				}
 			}
-		}
-		uvRect.top = currentImage.y * uvRect.height;
-		if (faceRight) {
-			uvRect.left = currentImage.x * uvRect.width;
-			uvRect.width = abs(uvRect.width);
-		}
-		else {
-			uvRect.left = (currentImage.x + 1) * abs(uvRect.width);
-			uvRect.width = -abs(uvRect.width);
-		}
+			uvRect.top = currentImage.y * uvRect.height;
+			if (faceRight) {
+				uvRect.left = currentImage.x * uvRect.width;
+				uvRect.width = abs(uvRect.width);
+			}
+			else {
+				uvRect.left = (currentImage.x + 1) * abs(uvRect.width);
+				uvRect.width = -abs(uvRect.width);
+			}
+			//cl.restart();
+
+		
+		//if (anicl < 0.6f)//พร้อมตี พร้อมกด k อีกรอบ
+		//{
+
+		//	
+		//}
+		//else if (anicl > 0.6)
+		//{
+		//	cl.restart();
+		//}
+		
 	}
 
 	/*

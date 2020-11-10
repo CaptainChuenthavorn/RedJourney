@@ -11,6 +11,10 @@ public://  import texture to get size  /No. of row and column/ how long we want 
 	void Update(int row, float deltaTime, bool faceRight);
 
 public:
+	clock_t end, start;
+
+	
+	
 	sf::IntRect uvRect;
 
 	//run, fall, idleWithSword, attack1, attack2, attack3, hurt, drawSword, keepSword, jump
@@ -23,7 +27,8 @@ public:
 	bool hurt = false;
 	bool drawSword = false;
 	bool keepSword = false;
-
+	bool canAttack = true;
+	bool finishAttack1 = false;
 	//enemy
 	bool enemyWalk = true;
 	sf::Clock cl;

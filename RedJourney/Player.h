@@ -2,6 +2,8 @@
 #include <SFML\Graphics.hpp>
 #include "animation.h"
 #include "Collider.h"
+#include "enemy.h"
+#include "animationEnemy.h"
 class Player
 {
 public:
@@ -12,16 +14,28 @@ public:
 	void Draw(sf::RenderWindow& widow); // need to have a & to run in one window
 	void OnCollision(sf::Vector2f direction);
 	sf::Vector2f GetPosition() {return body.getPosition();}
+	sf::Vector2f GetSize() { return body.getSize(); }
+	sf::Vector2f GetOrigin() { return body.getOrigin(); }
 	Collider GetCollider() { return Collider(body); }
-
-	unsigned int hp = 3;
-
-private:
+	Collider GetColliderHitbox() { return Collider(hitbox); }
+	sf::RectangleShape hitbox;
+	int hpPlayer = 3;
+	sf::RectangleShape bullet;
+	
+	sf::RectangleShape enemy1;
+public:
+	int attackState=0;//0=Ready , 1=attacking , 2=cooldown
+	clock_t end, start;
+	bool shoot = 0; //0=off,1=on
 	sf::Clock aniCl;
 	float animaCl;
 	sf::RectangleShape bound;
 	sf::RectangleShape body;
-	sf::RectangleShape hitbox;
+	sf::RectangleShape attack;
+	
+
+	
+	
 	animation animation;
 	unsigned int row;
 	float speed;
@@ -34,5 +48,7 @@ private:
 	sf::RectangleShape hitboxAttackRight;
 	sf::RectangleShape hitboxAttack;
 	sf::RectangleShape hitboxSize;
+
+	
 
 };

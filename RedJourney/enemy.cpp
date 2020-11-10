@@ -1,6 +1,6 @@
 ﻿#include "enemy.h"
 
-enemy::enemy(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, float speed)
+enemy::enemy(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, float speed,float PosX, float PosY)
 	:animationEnemy(texture, imageCount, switchTime)
 {
 	this->speed = speed;
@@ -9,8 +9,10 @@ enemy::enemy(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, fl
 	faceRight = true;
 	body.setSize(sf::Vector2f(128.0, 128.0));
 	body.setOrigin(body.getSize() / 2.0f);
-	body.setPosition(600.0f, 600.0f);
+	body.setPosition(PosX, PosY);
 	body.setTexture(texture);
+	sf::IntRect textureEny(0, 0, 64, 64);
+	body.setTextureRect(textureEny);
 	
 
 	hitbox.setSize(sf::Vector2f(30.0, 48.0));
@@ -25,22 +27,27 @@ enemy::~enemy()
 
 void enemy::Update(float deltaTime)
 {
+	
 	hitbox.setPosition(body.getPosition().x, body.getPosition().y);
 	animationEnemy.idle = true;
 	velocity.x *= 0.8f; // 0.2 slow 0.8 fast 
 	velocity.y += 981.0f * deltaTime;
 	//velocity.x += speed;
 	enycl = cl.getElapsedTime().asSeconds();
-	printf("%f\n", enycl);
-	if (enycl >= 2)
+	//printf("%f\n", enycl);
+	if (enycl <= 3.0f)
 	{
 		velocity.x += speed;	
 	}
-	else if (enycl >= 5)
+	else if (enycl <= 6.0f && enycl >=3.0f)
 	{
 		velocity.x -= speed;
-		cl.restart();
+		
 		enycl = 0.0f;
+	}
+	else {
+		
+		cl.restart();
 	}
 	
 	if (velocity.x == 0.0f)
@@ -63,7 +70,7 @@ void enemy::Update(float deltaTime)
 
 void enemy::Draw(sf::RenderWindow& window)
 {
-	window.draw(hitbox);
+	//window.draw(hitbox);
 	window.draw(body);
 }
 
@@ -90,3 +97,16 @@ void enemy::OncollisionEnemy(sf::Vector2f direction)
 		
 	}
 }
+
+sf::Vector2f enemy::SetPositionBounce(float moveX)
+{
+	body.setPosition(body.getPosition().x + moveX, body.getPosition().y);
+	return body.getPosition();
+}
+
+void enemy::render(sf::RenderTarget& target)
+{
+	target.draw(this->body);
+
+}
+

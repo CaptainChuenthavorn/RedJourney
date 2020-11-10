@@ -2,11 +2,9 @@
 Collider::Collider(sf::RectangleShape& body):
     body(body)
 {
-
 }
 Collider::~Collider()
 {
-
 }
 bool Collider::CheckCollision(Collider other, sf::Vector2f& direction, float push)
 {
@@ -24,8 +22,8 @@ bool Collider::CheckCollision(Collider other, sf::Vector2f& direction, float pus
     if (intersectX < 0.0f && intersectY < 0.0f)
     {
         push = std::min(std::max(push, 0.0f), 1.0f);
-
-        if (intersectX > intersectY)
+       
+        if (intersectX > intersectY)//check for slide in way less than 
         {
             if (deltaX > 0.0f)
             {
@@ -33,7 +31,6 @@ bool Collider::CheckCollision(Collider other, sf::Vector2f& direction, float pus
                 other.Move(-intersectX * push, 0.0f);
                 direction.x = -1.0f;
                 direction.y = 0.0f;
-
             }
             else
             {
@@ -42,7 +39,7 @@ bool Collider::CheckCollision(Collider other, sf::Vector2f& direction, float pus
             }
         }
         else {
-            if (deltaY  > 0.0f)
+            if (deltaY  > 0.0f) 
             {
                 Move(0.0f,intersectY * (1.0 - push));
                 other.Move(0.0f,-intersectY * push);
