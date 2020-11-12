@@ -4,9 +4,12 @@
 #include "animationEnemy.h"
 #include "Player.h"
 #include "iostream"
+#include "time.h"
+#include "stdlib.h"
 class enemy
 {
 public :
+	
 	enemy(sf::Texture* texture,sf::Vector2u imageCount, float switchTime, float speed,float PosX , float PosY);
 	~enemy();
 
@@ -22,6 +25,7 @@ public :
 	sf::Vector2f SetPositionBounce(float move);
 
 	int hp = 100;
+	
 
 	void render(sf::RenderTarget& target);
 	

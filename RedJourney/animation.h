@@ -29,6 +29,7 @@ public:
 	bool keepSword = false;
 	bool canAttack = true;
 	bool finishAttack1 = false;
+	bool finishJump = false;
 	//enemy
 	bool enemyWalk = true;
 	sf::Clock cl;

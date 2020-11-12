@@ -7,11 +7,13 @@ enemy::enemy(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, fl
 	
 	row = 0;
 	faceRight = true;
-	body.setSize(sf::Vector2f(128.0, 128.0));
+	body.setSize(sf::Vector2f(128.0, 128.0));//Old
+	//body.setSize(sf::Vector2f(120.0, 90.0));//New
 	body.setOrigin(body.getSize() / 2.0f);
 	body.setPosition(PosX, PosY);
 	body.setTexture(texture);
-	sf::IntRect textureEny(0, 0, 64, 64);
+	sf::IntRect textureEny(0, 0, 64, 64);//Origin
+	sf::IntRect textureEnyNew(0, 0, 40, 30);//new (can't use)
 	body.setTextureRect(textureEny);
 	
 
@@ -28,21 +30,27 @@ enemy::~enemy()
 void enemy::Update(float deltaTime)
 {
 	
+	srand(time(NULL));
+	
 	hitbox.setPosition(body.getPosition().x, body.getPosition().y);
 	animationEnemy.idle = true;
 	velocity.x *= 0.8f; // 0.2 slow 0.8 fast 
 	velocity.y += 981.0f * deltaTime;
 	//velocity.x += speed;
 	enycl = cl.getElapsedTime().asSeconds();
-	//printf("%f\n", enycl);
+	
 	if (enycl <= 3.0f)
 	{
-		velocity.x += speed;	
+		velocity.x += speed* 0.5;
 	}
 	else if (enycl <= 6.0f && enycl >=3.0f)
 	{
-		velocity.x -= speed;
-		
+		velocity.x = 0;
+
+	}
+	else if (enycl <= 9.0f && enycl >= 6.0f)
+	{
+		velocity.x -= speed*0.5;
 		enycl = 0.0f;
 	}
 	else {
@@ -65,12 +73,12 @@ void enemy::Update(float deltaTime)
 	}
 	animationEnemy.Update(row, deltaTime, faceRight);
 	body.setTextureRect(animationEnemy.uvRect);
-	body.move(velocity * deltaTime);
+	body.move(velocity * deltaTime);//Before : velocity * deltaTime
 }
 
 void enemy::Draw(sf::RenderWindow& window)
 {
-	//window.draw(hitbox);
+	window.draw(hitbox);
 	window.draw(body);
 }
 
@@ -78,10 +86,13 @@ void enemy::OncollisionEnemy(sf::Vector2f direction)
 {
 	if (direction.x < 0.0f) {
 		//collision on the left
+		velocity.x = -velocity.x;
 		velocity.x = 0.0f;
+
 	}
 	else if (direction.x > 0.0f) {
 		//collision on the right
+		velocity.x = -velocity.x;
 		velocity.x = 0.0f;
 		
 	}

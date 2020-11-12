@@ -7,9 +7,12 @@
 #include "Platform.h"
 #include "enemy.h"
 #include "hitbox.h" 
+#include "Bullet.h"
 sf::RenderWindow window(sf::VideoMode(1080, 720), "Red Adventure", sf::Style::Close | sf::Style::Resize);
 std::vector<enemy> enemies;
-sf::Texture enemySB;
+sf::Texture enemyBlack;
+sf::Texture enemyGrey;
+sf::Texture enemyGolden;
 int spawnTime;
 int spawnCooldown;
 int enemyCount;
@@ -25,6 +28,12 @@ void renderEnemies();
 
 int main()
 {
+	//bullet//
+	std::vector<Bullet> bullet;
+	sf::Texture bullet_texture;
+	sf::Clock bullTime;
+	float bull = 0.0f; //เป็นตัวเก็บค่า เวลาของ bullet
+	//////////
 	sf::RectangleShape bound;
 	bound.setSize(sf::Vector2f(100.0, 74.0));
 	bound.setOrigin(bound.getSize() / 2.0f);
@@ -61,7 +70,13 @@ int main()
 	enemyTexture.loadFromFile("asset/16x16 knight 4 v3.PNG");
 	enemy enemy(&enemyTexture, sf::Vector2u(8,8), 0.2f, 100.0f,500.0f,500.0f);
 
-	enemySB.loadFromFile("asset/16x16 knight 2 v3.PNG");
+
+	//load enemy texture//
+	enemyBlack.loadFromFile("asset/enemy/black.PNG");//16x16 knight 3 v3
+	
+	enemyGolden.loadFromFile("asset/enemy/16x16 knight 1 v3.PNG");
+	
+	enemyGrey.loadFromFile("asset/enemy/16x16 knight 2 v3.PNG");
 
 	//initialize platform
 	std::vector<Platform> platforms;
@@ -86,6 +101,10 @@ int main()
 	
 	hitbox
 		hitboxEnemy(0, 0, sf::Vector2f(30, 48), enemy.GetPosition());
+
+	//attack
+	int cooldown = 0;
+
 	//enemy.GetSize().y = 48
 
 
@@ -114,6 +133,23 @@ int main()
 			}
 		}
 
+		//bullet update //
+		bull = bullTime.getElapsedTime().asMilliseconds();
+		if(bull > 800)
+		{
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::J))
+			{
+				bullet.push_back(Bullet(&bullet_texture, sf::Vector2u(), 0/*imageCOunt*/, sf::Vector2f(player.GetPosition().x + 10/* +10 เพื่อให้ออกทางขวาของตัวผู้เล่น*/, player.GetPosition().y)));
+				bullTime.restart();
+				/*
+				player.attackState = 1;
+				player.velocity.x = 0;
+				//player.animation.attack1 = true;
+				player.start = clock();
+				*/
+			}
+		}
+		/////////////////
 
 		
 	
@@ -125,6 +161,9 @@ int main()
 		hitboxRight.Update(+28, 0, player.GetPosition());
 		hitboxEnemy.Update(0, 0, enemy.GetPosition());
 
+		for (Bullet& bullet : bullet)
+			bullet.Update(deltaTime);
+		
 		//player collider with platform//
 		sf::Vector2f direction;
 		for (Platform& platform : platforms)// == for(int i =0 ; i<platforms.size();i++)
@@ -141,7 +180,7 @@ int main()
 
 		if (enemy.GetColliderHitbox().CheckCollision(player.GetColliderHitbox(), direction, 1.0f))//1 can slide ,0 can't do anything
 		{
-			printf("Collision! \n");
+			//printf("Collision! \n");
 			
 			enemy.OncollisionEnemy(direction);
 			player.velocity.x = 0.0f;
@@ -153,10 +192,17 @@ int main()
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::K) && player.attackState == 0)
 		{
 			player.attackState = 1;
+			player.velocity.x = 0;
 			//player.animation.attack1 = true;
+			player.start = clock();
 			
 		}
+		
 		//printf("attack : 1 %s\n",player.animation.attack1 ? "true" : "false");
+		//printf("Attack state : %d\n", player.attackState);
+		
+		//attack//
+		
 		if (player.attackState > 0)
 		{
 
@@ -166,12 +212,27 @@ int main()
 				if (hitboxMid.getGlobalbounds().intersects(enemy.GetGlobalbounds()))
 				{
 					
-					
-					player.attackState = 2;
-					std::cout << "Hit" << std::endl;
-					enemy.hp--;
-					printf("%d", enemy.hp);
-					if (player.faceRight = true)
+					if (sf::Keyboard::isKeyPressed(sf::Keyboard::K))
+					{
+						
+						cooldown++;
+						if (cooldown == 1 || cooldown == 2 || cooldown == 3)
+						{
+							//player.attackState = 1;
+							player.velocity.x = 0;
+							player.attackState = 2;
+							//std::cout << "Hit" << std::endl;
+
+							enemy.hp--;
+							printf(" Hit enemy hp :%d    \n", enemy.hp);
+
+							if (enemy.hp <= 0)
+							{
+								//std::cout << "Score " << std::endl;
+							}
+						}
+					}
+					/*if (player.faceRight = true)
 					{
 						enemy.SetPositionBounce(20.0f);
 
@@ -180,30 +241,31 @@ int main()
 					{
 						enemy.SetPositionBounce(-50.f);
 
-					}
+					}*/
 				}
 			}
 			double dif = (double)(player.end - player.start) / CLOCKS_PER_SEC; // ความห่างของเวลา //0.6  0.4  0.4
 			
-			if (dif > 20.0f)//พร้อมตี พร้อมกด k อีกรอบ
+			if (dif > 0.6f)//พร้อมตี พร้อมกด k อีกรอบ
 			{
-				
+				cooldown = 0;
 				player.attackState = 0;
 
 			}
-			else if (dif > 12.0f)//เข้าช่วงคูลดาว
+			else if (dif > 0.4f)//เข้าช่วงคูลดาว
 			{
 				player.animation.attack1 = false;
 				player.attackState = 2;
 
 			}
 
-			else if (dif <= 12.0f)
+			else if (dif <= 0.4f)
 			{
+				//printf("%lf    ", dif);
 				
-				
-				std::cout << "Cooldown" << std::endl;
+				// std::cout << "Cooldown" << std::endl;
 			}
+			
 		}
 
 
@@ -234,10 +296,30 @@ int main()
 		hitboxLeft.Draw(window);
 		hitboxRight.Draw(window);
 		
+		
+		
 		//draw Enemy vector
 		
-		renderEnemies();
 
+		renderEnemies();
+		
+
+		for (int i = 0;i < enemies.size();i++)
+		{
+			if (hitboxLeft.getGlobalbounds().intersects(enemies[i].GetGlobalbounds()))
+			{
+
+			}
+		}
+		if (enemy.hp <= 0) {
+			for (int i = 0;i < enemies.size();i++)
+			{
+				enemies.erase(enemies.begin() + i);
+			}
+		}
+		
+		
+		
 
 		//window.draw(bound);
 		//window.draw(boundE);
@@ -248,6 +330,9 @@ int main()
 		//draw platforms//
 		for (Platform& platform : platforms)
 		platform.Draw(window);
+		//draw bullet//
+		for (Bullet& bullet : bullet)
+			bullet.Draw(window);
 
 		//display//
 		window.display();
@@ -261,21 +346,30 @@ void InitEnemy()
 	if (spawnTime == spawnCooldown && enemyCount < enemyMax || enemyCount < 3)
 	{
 		
-		enemies.push_back(enemy(&enemySB, sf::Vector2u(8, 8), 0.2f, 100.0f,600.0f,600.0f));
-		enemies.push_back(enemy(&enemySB, sf::Vector2u(8, 8), 0.2f, 100.0f, 600.0f, 500.0f));
-		enemies.push_back(enemy(&enemySB, sf::Vector2u(8, 8), 0.2f, 100.0f, 600.0f, 400.0f));
-		enemies.push_back(enemy(&enemySB, sf::Vector2u(8, 8), 0.2f, 100.0f, 600.0f, 300.0f));
-		enemies.push_back(enemy(&enemySB, sf::Vector2u(8, 8), 0.2f, 100.0f, 600.0f, 800.0f));
+		enemies.push_back(enemy(&enemyGolden, sf::Vector2u(8, 8), 0.2f, 100.0f,1000.0f,600.0f));
+		enemies.push_back(enemy(&enemyGolden, sf::Vector2u(8, 8), 0.2f, 100.0f, 900.0f, 500.0f));
+		enemies.push_back(enemy(&enemyGolden, sf::Vector2u(8, 8), 0.2f, 100.0f, 800.0f, 400.0f));
+		enemies.push_back(enemy(&enemyGrey, sf::Vector2u(8, 8), 0.2f, 100.0f, 700.0f, 300.0f));
+		enemies.push_back(enemy(&enemyGrey, sf::Vector2u(8, 8), 0.2f, 100.0f, 600.0f, 800.0f));
+		for (int k = 0;k < enemies.size();k++)
+		{
+			hitbox
+				hitboxEnemies(0, 0, sf::Vector2f(30, 48), enemies[k].GetPosition());
+		}
+		
 		enemyCount++;
 		std::cout << enemyCount << std::endl;
 	}
+
 }
 
 void renderEnemies()
 {
+
 	for (int i = 0;i < enemies.size();i++)
 	{
 		enemies[i].render(window);
+		
 	}
 
 }

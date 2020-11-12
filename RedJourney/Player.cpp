@@ -29,11 +29,6 @@ Player::Player(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, 
 	bullet.setFillColor(sf::Color::Black);
 	bullet.setPosition(body.getPosition());
 	
-	//enemy
-	enemy1.setSize(sf::Vector2f(100.0, 74.0));
-	enemy1.setOrigin(body.getSize() / 2.0f);
-	enemy1.setPosition(500.0f, 600.0f);
-	//enemy1.setTexture(texture);
 
 }
 Player::~Player() {
@@ -80,7 +75,7 @@ void Player::Update(float deltaTime)
 			animation.idle = false;
 			animation.attack1 = false;
 			animation.jump = true;
-
+			
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && canJump)
 	{
@@ -89,7 +84,11 @@ void Player::Update(float deltaTime)
 		//Formula : square root (2.0f * gravity * jumpHeight)
 	}
 
-	
+	if (animation.finishJump == true)
+	{
+		animation.jump = false;
+		animation.finishJump = false;
+	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::K))
 	{
@@ -100,7 +99,7 @@ void Player::Update(float deltaTime)
 		animation.idle = false;
 		animation.jump = false;
 		animation.attack1 = true;
-		//aniCl.restart();
+	
 	}
 	if (animation.finishAttack1 == true)
 	{
@@ -234,7 +233,7 @@ void Player::Update(float deltaTime)
 void Player::Draw(sf::RenderWindow& window)
 {
 	
-	window.draw(enemy1);
+	
 	window.draw(bullet);
 	window.draw(hitbox);
 	window.draw(body);
