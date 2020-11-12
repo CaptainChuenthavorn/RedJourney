@@ -20,3 +20,8 @@ void Bullet::Draw(sf::RenderWindow& window)
 {
 	window.draw(body);
 }
+
+void Bullet::setDestroy(bool isDestroy)
+{
+	this->isDestroyBool = isDestroy;
+}

@@ -24,7 +24,9 @@ public :
 	Collider GetColliderHitbox() { return Collider(hitbox); }
 	sf::Vector2f SetPositionBounce(float move);
 
-	int hp = 100;
+	void setHp(float dmg);
+	float GetHp() { return hp; }
+	float hp = 100;
 	
 
 	void render(sf::RenderTarget& target);
@@ -42,6 +44,8 @@ public:
 	bool faceRight;
 	sf::Vector2u imageCount;
 	sf::Vector2f velocity;
+	
+
 	
 };
 

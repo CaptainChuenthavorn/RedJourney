@@ -24,10 +24,7 @@ Player::Player(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, 
 	hitbox.setFillColor(sf::Color::Blue);
 
 
-	//bullet
-	bullet.setSize(sf::Vector2f(20.0f, 10.0f));
-	bullet.setFillColor(sf::Color::Black);
-	bullet.setPosition(body.getPosition());
+	
 	
 
 }
@@ -196,8 +193,7 @@ void Player::Update(float deltaTime)
 	//Bullet
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::J))
 	{
-		bullet.setPosition(body.getPosition());
-		shoot = 1;
+	
 
 		animation.currentImage.y = 5;
 		
@@ -207,8 +203,6 @@ void Player::Update(float deltaTime)
 		animation.attack1 = true;
 
 	}
-	if (shoot == 1)
-		bullet.move(5.f, 0.0f);//spped x axis 20,y axis=0
 	
 	velocity.y += 981.0f * deltaTime;
 	if(velocity.x == 0.0f) 
@@ -234,7 +228,7 @@ void Player::Draw(sf::RenderWindow& window)
 {
 	
 	
-	window.draw(bullet);
+	
 	window.draw(hitbox);
 	window.draw(body);
 }

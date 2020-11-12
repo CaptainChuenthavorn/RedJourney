@@ -4,6 +4,7 @@ enemy::enemy(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, fl
 	:animationEnemy(texture, imageCount, switchTime)
 {
 	this->speed = speed;
+	this->hp = 250.0f;
 	
 	row = 0;
 	faceRight = true;
@@ -113,6 +114,11 @@ sf::Vector2f enemy::SetPositionBounce(float moveX)
 {
 	body.setPosition(body.getPosition().x + moveX, body.getPosition().y);
 	return body.getPosition();
+}
+
+void enemy::setHp(float dmg)
+{
+	this->hp = dmg;
 }
 
 void enemy::render(sf::RenderTarget& target)

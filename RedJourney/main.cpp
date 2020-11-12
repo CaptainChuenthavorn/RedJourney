@@ -154,6 +154,7 @@ int main()
 		
 	
 		//player && enemy Update && hitboxupdate//
+		sf::Vector2f direction;
 		player.Update(deltaTime);
 		enemy.Update(deltaTime);
 		hitboxMid.Update(0, 0, player.GetPosition());
@@ -161,11 +162,29 @@ int main()
 		hitboxRight.Update(+28, 0, player.GetPosition());
 		hitboxEnemy.Update(0, 0, enemy.GetPosition());
 
-		for (Bullet& bullet : bullet)
+		for (Bullet& bullet : bullet){
 			bullet.Update(deltaTime);
+		}
+		Collider temp = enemy.GetColliderHitbox();
+		for (Bullet& bullet : bullet)
+		{
+			if (bullet.GetCollider().CheckCollision(temp,direction,1.0f)) {
+				bullet.setDestroy(true);
+				enemy.setHp(bullet.GetDmg());
+			
+			}
+		}
+		for (int b = 0;b < bullet.size();b++)
+		{
+			if (bullet[b].isDestroy())
+			{
+				bullet.erase(bullet.begin() + b);
+			}
+		}
+
 		
 		//player collider with platform//
-		sf::Vector2f direction;
+		
 		for (Platform& platform : platforms)// == for(int i =0 ; i<platforms.size();i++)
 		if ( platform.GetCollider().CheckCollision ( player.GetCollider(), direction, 1.0f )  ) 
 			player.OnCollision(direction);
