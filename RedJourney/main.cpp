@@ -8,29 +8,45 @@
 #include "enemy.h"
 #include "hitbox.h" 
 #include "Bullet.h"
-sf::RenderWindow window(sf::VideoMode(1080, 720), "Red Adventure", sf::Style::Close | sf::Style::Resize);
-std::vector<enemy> enemies;
-sf::Texture enemyBlack;
-sf::Texture enemyGrey;
-sf::Texture enemyGolden;
-int spawnTime;
-int spawnCooldown;
-int enemyCount;
-int enemyMax;
+
+
 static const float VIEW_HEIGHT = 720.0f;
 static const float VIEW_WIDTH = 1080.0f;
 void ResizeView(const sf::RenderWindow& window, sf::View& view) {
 	float aspectRatio = float(window.getSize().x) / float(window.getSize().y);
 	view.setSize(VIEW_HEIGHT * aspectRatio, VIEW_HEIGHT);
 }
-void InitEnemy();
-void renderEnemies();
 
 int main()
 {
+	//score////////
+	int scoreCount=0;
+	sf::Font font;
+	if (font.loadFromFile("asset/FSEX300.ttf"))
+	{
+
+	}
+	sf::Text scoreText;
+	sf::Text scoreString;
+	
+
+
+	////////////
+	sf::RenderWindow window(sf::VideoMode(1080, 720), "Red Adventure", sf::Style::Close | sf::Style::Resize);
+	//enemies//
+	std::vector<enemy> enemies;
+	sf::Texture enemyBlack;
+	sf::Texture enemyGrey;
+	sf::Texture enemyGolden;
+	enemies.push_back(enemy(&enemyGolden, sf::Vector2u(8, 8), 0.2f, 100.0f, 1000.0f, 620.0f));
+	enemies.push_back(enemy(&enemyGrey, sf::Vector2u(8, 8), 0.2f, 100.0f, 1200.0f, 620.0f));
 	//bullet//
 	std::vector<Bullet> bullet;
 	sf::Texture bullet_texture;
+	if (!bullet_texture.loadFromFile("asset/Adventurer-Bow/Individual Sprites/adventurer-bow-00.png"))
+	{
+
+	}
 	sf::Clock bullTime;
 	float bull = 0.0f; //เป็นตัวเก็บค่า เวลาของ bullet
 	//////////
@@ -68,7 +84,7 @@ int main()
 	
 	sf::Texture enemyTexture;
 	enemyTexture.loadFromFile("asset/16x16 knight 4 v3.PNG");
-	enemy enemy(&enemyTexture, sf::Vector2u(8,8), 0.2f, 100.0f,500.0f,500.0f);
+	enemy enemy1(&enemyTexture, sf::Vector2u(8,8), 0.2f, 100.0f,500.0f,500.0f);
 
 
 	//load enemy texture//
@@ -100,7 +116,7 @@ int main()
 		hitboxRight(+28, 0, sf::Vector2f(28, player.GetSize().y), player.GetPosition());
 	
 	hitbox
-		hitboxEnemy(0, 0, sf::Vector2f(30, 48), enemy.GetPosition());
+		hitboxEnemy(0, 0, sf::Vector2f(30, 48), enemy1.GetPosition());
 
 	//attack
 	int cooldown = 0;
@@ -112,7 +128,7 @@ int main()
 	sf::Clock clockW;
 
 
-	InitEnemy();
+	
 	while (window.isOpen()) {
 		deltaTime = clockW.restart().asSeconds();
 		if (deltaTime > 1.0f / 60.0f)
@@ -133,56 +149,94 @@ int main()
 			}
 		}
 
-		//bullet update //
+		/////////////////////////////////////////////////////bullet update /////////////////////////////////////////////////////
 		bull = bullTime.getElapsedTime().asMilliseconds();
 		if(bull > 800)
 		{
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::J))
 			{
-				bullet.push_back(Bullet(&bullet_texture, sf::Vector2u(), 0/*imageCOunt*/, sf::Vector2f(player.GetPosition().x + 10/* +10 เพื่อให้ออกทางขวาของตัวผู้เล่น*/, player.GetPosition().y)));
+				
+				bullet.push_back(Bullet(&bullet_texture, sf::Vector2u(1,1), 0/*imageCOunt*/, sf::Vector2f(player.GetPosition().x + 10/* +10 เพื่อให้ออกทางขวาของตัวผู้เล่น*/, player.GetPosition().y)));
 				bullTime.restart();
-				/*
-				player.attackState = 1;
-				player.velocity.x = 0;
-				//player.animation.attack1 = true;
-				player.start = clock();
-				*/
+				
 			}
 		}
-		/////////////////
+		for (Bullet& bullet : bullet) {
+			//printf("Update!\n");
+			bullet.Update(deltaTime);
+		}
+		/*for (enemy& enemy : enemies) {
+			enemy.Update(deltaTime);
+		}*/
+		//////////////////////////////////////////////////////////////////////////////////////////////////////
 
-		
+
+		/////////////////////////////////////////////////score Update////////////////////////////////////////////////
 	
-		//player && enemy Update && hitboxupdate//
+		scoreText.setPosition(player.GetPosition().x-300, player.GetPosition().y- 300);
+		scoreText.setFillColor(sf::Color::Red);
+		scoreText.setFont(font);
+		scoreText.setString(std::to_string(scoreCount));
+		scoreText.setOutlineThickness(5.f);
+		scoreText.setOutlineColor(sf::Color::White);
+		scoreString.setPosition(scoreText.getPosition().x - 120, scoreText.getPosition().y-1);
+		scoreString.setFillColor(sf::Color::Red);
+		scoreString.setFont(font);
+		scoreString.setString("Score : ");
+		scoreString.setOutlineThickness(5.f);
+		scoreString.setOutlineColor(sf::Color::White);
+		//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		/////////////////////////////////////////player && enemy Update && hitboxupdate/////////////////////////////////////////
 		sf::Vector2f direction;
 		player.Update(deltaTime);
-		enemy.Update(deltaTime);
+		enemy1.Update(deltaTime);
+		
 		hitboxMid.Update(0, 0, player.GetPosition());
 		hitboxLeft.Update(-28, 0, player.GetPosition());
 		hitboxRight.Update(+28, 0, player.GetPosition());
-		hitboxEnemy.Update(0, 0, enemy.GetPosition());
+		hitboxEnemy.Update(0, 0, enemy1.GetPosition());
 
-		for (Bullet& bullet : bullet){
-			bullet.Update(deltaTime);
-		}
-		Collider temp = enemy.GetColliderHitbox();
-		for (Bullet& bullet : bullet)
-		{
-			if (bullet.GetCollider().CheckCollision(temp,direction,1.0f)) {
-				bullet.setDestroy(true);
-				enemy.setHp(bullet.GetDmg());
-			
-			}
-		}
-		for (int b = 0;b < bullet.size();b++)
-		{
-			if (bullet[b].isDestroy())
+		printf("Hp enemy ; %d\n", enemies[1].hp);
+
+		if (enemies.size() > 0) {
+			Collider temp = enemies[1].GetColliderHitbox();
+			for (Bullet& bullet : bullet)
 			{
-				bullet.erase(bullet.begin() + b);
-			}
-		}
+				if (bullet.GetCollider().CheckCollisionAttack(temp)) {
+					
+					//printf("Bullet Destroy!!\n");
+					bullet.setDestroy(true);
+					enemies[1].setHp(bullet.GetDmg()); 
+					if (enemies[1].GetHp() < 0)
+					{
+						enemies[1].setDie(true);
 
-		
+					}
+				}
+			}
+			for (int i = 0;i < bullet.size();i++)
+			{
+				if (bullet[i].isDestroy())
+				{
+					bullet.erase(bullet.begin() + i);
+				}
+			}
+			
+			for (size_t E = 0; E < enemies.size(); E++)
+			{
+				if (enemies[E].isDie())
+				{
+					//enemies.erase(enemies.begin() + E);
+				}
+
+			}
+			/*if (enemies[0].GetHp() <= 0)
+			{
+				enemies.erase(enemies.begin()+1);
+			}*/
+		}
+	
 		//player collider with platform//
 		
 		for (Platform& platform : platforms)// == for(int i =0 ; i<platforms.size();i++)
@@ -191,19 +245,19 @@ int main()
 		
 		//enemy collider with platform
 		for (Platform& platform : platforms)
-		if (platform.GetCollider().CheckCollision(enemy.GetCollider(), direction, 1.0f))
-			enemy.OncollisionEnemy(direction);
+		if (platform.GetCollider().CheckCollision(enemy1.GetCollider(), direction, 1.0f))
+			enemy1.OncollisionEnemy(direction);
 
 		//enemy.GetCollider().CheckCollision(player.GetCollider(),direction, 0.0f);//1 can slide ,0 can't do anything
 		//	enemy.OncollisionEnemy(direction);
 
-		if (enemy.GetColliderHitbox().CheckCollision(player.GetColliderHitbox(), direction, 1.0f))//1 can slide ,0 can't do anything
+		if (enemy1.GetColliderHitbox().CheckCollision(player.GetColliderHitbox(), direction, 1.0f))//1 can slide ,0 can't do anything
 		{
 			//printf("Collision! \n");
 			
-			enemy.OncollisionEnemy(direction);
+			enemy1.OncollisionEnemy(direction);
 			player.velocity.x = 0.0f;
-			enemy.velocity.x = 0.0f;
+			enemy1.velocity.x = 0.0f;
 			
 		}
 		
@@ -228,7 +282,7 @@ int main()
 			
 			if (player.attackState == 1)
 			{
-				if (hitboxMid.getGlobalbounds().intersects(enemy.GetGlobalbounds()))
+				if (hitboxMid.getGlobalbounds().intersects(enemy1.GetGlobalbounds()))
 				{
 					
 					if (sf::Keyboard::isKeyPressed(sf::Keyboard::K))
@@ -241,26 +295,17 @@ int main()
 							player.velocity.x = 0;
 							player.attackState = 2;
 							//std::cout << "Hit" << std::endl;
+							scoreCount += 10;
+							enemy1.hp--;
+							printf(" Hit enemy hp :%d    \n", enemy1.hp);
 
-							enemy.hp--;
-							printf(" Hit enemy hp :%d    \n", enemy.hp);
-
-							if (enemy.hp <= 0)
+							if (enemy1.hp <= 0)
 							{
 								//std::cout << "Score " << std::endl;
 							}
 						}
 					}
-					/*if (player.faceRight = true)
-					{
-						enemy.SetPositionBounce(20.0f);
-
-					}
-					else if (player.faceRight == false)
-					{
-						enemy.SetPositionBounce(-50.f);
-
-					}*/
+					
 				}
 			}
 			double dif = (double)(player.end - player.start) / CLOCKS_PER_SEC; // ความห่างของเวลา //0.6  0.4  0.4
@@ -296,20 +341,25 @@ int main()
 		for (Background& background : backgrounds)
 			background.Update(deltaTime);
 
+
+
+
+
+		///////////////////////////////////////////////////////////////////clear//////////////////////////////////////////////////////////////////////
 		window.clear(sf::Color(150, 200, 200));
 		
-		//bound around player && enemy//
+		/////////////////////////////////////////bound around player && enemy/////////////////////////////////////////
 		bound.setPosition(player.GetPosition ().x, player.GetPosition().y);
-		boundE.setPosition(enemy.GetPosition().x, enemy.GetPosition().y);
+		boundE.setPosition(enemy1.GetPosition().x, enemy1.GetPosition().y);
 		
-		//Draw bg//
+		/////////////////////////////////////////Draw bg/////////////////////////////////////////
 		for (Background& background : backgrounds)
 			background.Draw(window);
 
-		//set view//
+		/////////////////////////////////////////set view/////////////////////////////////////////
 		window.setView(view);
 
-		//draw  everything//
+		/////////////////////////////////////////draw  everything/////////////////////////////////////////
 		hitboxEnemy.Draw(window);
 		hitboxMid.Draw(window);
 		hitboxLeft.Draw(window);
@@ -317,11 +367,9 @@ int main()
 		
 		
 		
-		//draw Enemy vector
+	
 		
-
-		renderEnemies();
-		
+		/*
 
 		for (int i = 0;i < enemies.size();i++)
 		{
@@ -336,30 +384,41 @@ int main()
 				enemies.erase(enemies.begin() + i);
 			}
 		}
-		
+		*/
 		
 		
 
 		//window.draw(bound);
 		//window.draw(boundE);
 		player.Draw(window);
-		if (enemy.hp > 0) {
-			enemy.Draw(window);
+		if (enemy1.hp > 0) {
+			enemy1.Draw(window);
 		}
 		//draw platforms//
 		for (Platform& platform : platforms)
 		platform.Draw(window);
 		//draw bullet//
-		for (Bullet& bullet : bullet)
+		for (Bullet& bullet : bullet){
+			
 			bullet.Draw(window);
-
+		}
+		/////////////////////////////////////////draw Enemy vector///////////////////////////////////////
+		
+		if (enemies.size() > 0)
+		{
+			enemies[0].Draw(window);
+			enemies[1].Draw(window);
+		}
+		/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		window.draw(scoreText);
+		window.draw(scoreString);
 		//display//
 		window.display();
 	 }
 	return 0;
 }
 
-
+/*
 void InitEnemy()
 {
 	if (spawnTime == spawnCooldown && enemyCount < enemyMax || enemyCount < 3)
@@ -391,4 +450,4 @@ void renderEnemies()
 		
 	}
 
-}
+}*/

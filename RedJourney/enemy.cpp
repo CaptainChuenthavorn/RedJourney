@@ -3,8 +3,10 @@
 enemy::enemy(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, float speed,float PosX, float PosY)
 	:animationEnemy(texture, imageCount, switchTime)
 {
+	this->isDieBool = false;
+
 	this->speed = speed;
-	this->hp = 250.0f;
+	this->hp = 50;
 	
 	row = 0;
 	faceRight = true;
@@ -116,14 +118,21 @@ sf::Vector2f enemy::SetPositionBounce(float moveX)
 	return body.getPosition();
 }
 
-void enemy::setHp(float dmg)
+void enemy::setHp(int dmg)
 {
-	this->hp = dmg;
+	this->hp -= dmg;
 }
 
 void enemy::render(sf::RenderTarget& target)
 {
 	target.draw(this->body);
+
+}
+
+void enemy::setDie(bool isDie)
+{
+	
+		this->isDieBool = isDie;
 
 }
 

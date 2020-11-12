@@ -56,3 +56,23 @@ bool Collider::CheckCollision(Collider other, sf::Vector2f& direction, float pus
     }
     return false;
 }
+
+bool Collider::CheckCollisionAttack(Collider other)
+{
+    sf::Vector2f otherPosition = other.GetPosition(); //ตำแหน่งที่มาชน
+    sf::Vector2f otherHalfSize = other.GetHalfSize(); //เอาจุดกึ่งกลาง
+    sf::Vector2f thisPosition = GetPosition();//ตัวที่เราสนใจอยู่
+    sf::Vector2f thisHalfSize = GetHalfSize();//จุดกึ่งกลางตัวที่เราสนใจ
+
+    float deltaX = otherPosition.x - thisPosition.x;
+    float deltaY = otherPosition.y - thisPosition.y;
+
+    float intersectX = abs(deltaX) - (otherHalfSize.x + thisHalfSize.x); //ระยะห่างแกนx
+    float intersectY = abs(deltaY) - (otherHalfSize.y + thisHalfSize.y);
+
+    if (intersectX < 0.0f && intersectY < 0.0f)
+    {
+        return true;
+    }
+    return false;
+}

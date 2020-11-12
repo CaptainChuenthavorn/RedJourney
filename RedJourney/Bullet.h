@@ -25,6 +25,6 @@ private:
 
 	bool isDestroyBool;
 	float speed;
-	float dmg;
+	int dmg;
 };
 

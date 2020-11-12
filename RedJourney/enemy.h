@@ -24,9 +24,9 @@ public :
 	Collider GetColliderHitbox() { return Collider(hitbox); }
 	sf::Vector2f SetPositionBounce(float move);
 
-	void setHp(float dmg);
-	float GetHp() { return hp; }
-	float hp = 100;
+	void setHp(int dmg);
+	int GetHp() { return hp; }
+	int hp ;
 	
 
 	void render(sf::RenderTarget& target);
@@ -47,5 +47,9 @@ public:
 	
 
 	
+	void setDie(bool isDestroy);
+
+	bool isDie() { return isDieBool; }
+	bool isDieBool;
 };
 

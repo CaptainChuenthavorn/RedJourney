@@ -3,10 +3,13 @@
 Bullet::Bullet(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, sf::Vector2f position):
 	animation(texture, imageCount, switchTime)/* to get animation class*/
 {
-	body.setSize(sf::Vector2f(10.f, 10.f));
+	body.setSize(sf::Vector2f(100.f, 10.f));
 	body.setOrigin(body.getSize() / 2.0f);
 	body.setPosition(position);
 	body.setTexture(texture);
+	this->dmg = 10;
+	this->speed = speed;
+	this->isDestroyBool = false;
 }
 
 void Bullet::Update(float deltaTime)
