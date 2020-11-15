@@ -19,7 +19,7 @@ public :
 	sf::FloatRect GetGlobalbounds() { return body.getGlobalBounds(); }
 	sf::Vector2f GetPosition() { return body.getPosition(); }
 	sf::Vector2f GetSize() { return body.getSize(); }
-	
+	sf::Vector2f SetPosition(sf::Vector2f randPos);
 	Collider GetCollider() { return Collider(body); }
 	Collider GetColliderHitbox() { return Collider(hitbox); }
 	sf::Vector2f SetPositionBounce(float move);
@@ -27,9 +27,6 @@ public :
 	void setHp(int dmg);
 	int GetHp() { return hp; }
 	int hp ;
-	
-
-	void render(sf::RenderTarget& target);
 	
 
 public: 

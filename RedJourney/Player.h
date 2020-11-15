@@ -26,6 +26,7 @@ public:
 	sf::RectangleShape enemy1;
 public:
 	int attackState=2;//0=Ready , 1=attacking , 2=cooldown
+	int shootState = 2;//0=Ready , 1=attacking , 2=cooldown
 	int jumpAni = 2;//0=Ready , 1 =jumping , 2=cooldown
 	clock_t end, start;
 	bool shoot = 0; //0=off,1=on
@@ -35,9 +36,16 @@ public:
 	sf::RectangleShape body;
 	sf::RectangleShape attack;
 	
+	float maxstamina = 1500;
+	float stamina = 1500;
+	
 
-	
-	
+	sf::Clock imCl;
+	float immortalCl;
+	bool immortal = false;
+	float immortalTime;
+	int currentHp;
+
 	animation animation;
 	unsigned int row;
 	float speed;

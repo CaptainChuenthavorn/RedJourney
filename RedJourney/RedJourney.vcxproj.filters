@@ -15,63 +15,75 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="..\..\RedReborn\RedReborn\animation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="animation.cpp">
+    <ClCompile Include="..\..\RedReborn\RedReborn\animationEnemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
+    <ClCompile Include="..\..\RedReborn\RedReborn\Background.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Collider.cpp">
+    <ClCompile Include="..\..\RedReborn\RedReborn\Bullet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Platform.cpp">
+    <ClCompile Include="..\..\RedReborn\RedReborn\Collider.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Background.cpp">
+    <ClCompile Include="..\..\RedReborn\RedReborn\enemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="enemy.cpp">
+    <ClCompile Include="..\..\RedReborn\RedReborn\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="animationEnemy.cpp">
+    <ClCompile Include="..\..\RedReborn\RedReborn\hitbox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="hitbox.cpp">
+    <ClCompile Include="..\..\RedReborn\RedReborn\Item.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp">
+    <ClCompile Include="..\..\RedReborn\RedReborn\Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\RedReborn\RedReborn\Platform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\RedReborn\RedReborn\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="animation.h">
+    <ClInclude Include="..\..\RedReborn\RedReborn\animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
+    <ClInclude Include="..\..\RedReborn\RedReborn\animationEnemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Collider.h">
+    <ClInclude Include="..\..\RedReborn\RedReborn\Background.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Platform.h">
+    <ClInclude Include="..\..\RedReborn\RedReborn\BaseState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Background.h">
+    <ClInclude Include="..\..\RedReborn\RedReborn\Bullet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="enemy.h">
+    <ClInclude Include="..\..\RedReborn\RedReborn\Collider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="animationEnemy.h">
+    <ClInclude Include="..\..\RedReborn\RedReborn\enemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="hitbox.h">
+    <ClInclude Include="..\..\RedReborn\RedReborn\hitbox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Bullet.h">
+    <ClInclude Include="..\..\RedReborn\RedReborn\Item.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\RedReborn\RedReborn\Platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\RedReborn\RedReborn\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

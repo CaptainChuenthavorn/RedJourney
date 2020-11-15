@@ -9,7 +9,7 @@ Background::Background(sf::Texture* texture, float speed)
 	body[0].setTexture(texture);
 	body[1].setTexture(texture);
 	body[0].setOrigin(0, 0);
-	
+
 	if (speed < 0)//left
 		body[1].setPosition(size.x - 2.0f, 0.0f);
 	else
@@ -19,7 +19,7 @@ Background::Background(sf::Texture* texture, float speed)
 
 void Background::Update(float deltaTime)
 {
-	for(int i = 0;i<2;i++){
+	for (int i = 0;i < 2;i++) {
 		position = body[i].getPosition();
 		body[i].move(speed * deltaTime, 0);
 

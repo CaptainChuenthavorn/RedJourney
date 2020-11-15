@@ -18,6 +18,33 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\RedReborn\RedReborn\animation.cpp" />
+    <ClCompile Include="..\..\RedReborn\RedReborn\animationEnemy.cpp" />
+    <ClCompile Include="..\..\RedReborn\RedReborn\Background.cpp" />
+    <ClCompile Include="..\..\RedReborn\RedReborn\Bullet.cpp" />
+    <ClCompile Include="..\..\RedReborn\RedReborn\Collider.cpp" />
+    <ClCompile Include="..\..\RedReborn\RedReborn\enemy.cpp" />
+    <ClCompile Include="..\..\RedReborn\RedReborn\Game.cpp" />
+    <ClCompile Include="..\..\RedReborn\RedReborn\hitbox.cpp" />
+    <ClCompile Include="..\..\RedReborn\RedReborn\Item.cpp" />
+    <ClCompile Include="..\..\RedReborn\RedReborn\Main.cpp" />
+    <ClCompile Include="..\..\RedReborn\RedReborn\Platform.cpp" />
+    <ClCompile Include="..\..\RedReborn\RedReborn\Player.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\RedReborn\RedReborn\animation.h" />
+    <ClInclude Include="..\..\RedReborn\RedReborn\animationEnemy.h" />
+    <ClInclude Include="..\..\RedReborn\RedReborn\Background.h" />
+    <ClInclude Include="..\..\RedReborn\RedReborn\BaseState.h" />
+    <ClInclude Include="..\..\RedReborn\RedReborn\Bullet.h" />
+    <ClInclude Include="..\..\RedReborn\RedReborn\Collider.h" />
+    <ClInclude Include="..\..\RedReborn\RedReborn\enemy.h" />
+    <ClInclude Include="..\..\RedReborn\RedReborn\hitbox.h" />
+    <ClInclude Include="..\..\RedReborn\RedReborn\Item.h" />
+    <ClInclude Include="..\..\RedReborn\RedReborn\Platform.h" />
+    <ClInclude Include="..\..\RedReborn\RedReborn\Player.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -144,29 +171,6 @@
       <AdditionalDependencies>sfml-main-d.lib;sfml-system-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;sfml-network-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="animation.cpp" />
-    <ClCompile Include="animationEnemy.cpp" />
-    <ClCompile Include="Background.cpp" />
-    <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="Collider.cpp" />
-    <ClCompile Include="enemy.cpp" />
-    <ClCompile Include="hitbox.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Platform.cpp" />
-    <ClCompile Include="Player.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="animation.h" />
-    <ClInclude Include="animationEnemy.h" />
-    <ClInclude Include="Background.h" />
-    <ClInclude Include="Bullet.h" />
-    <ClInclude Include="Collider.h" />
-    <ClInclude Include="enemy.h" />
-    <ClInclude Include="hitbox.h" />
-    <ClInclude Include="Platform.h" />
-    <ClInclude Include="Player.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

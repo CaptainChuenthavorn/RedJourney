@@ -21,6 +21,8 @@ public:
 	bool idle = true;
 	bool run = false;
 	bool jump = false;
+	bool shoot = false;
+	bool finishShoot = false;
 	bool attack1 = false;
 	bool attack2 = false;
 	bool attack3 = false;
@@ -30,6 +32,7 @@ public:
 	bool canAttack = true;
 	bool finishAttack1 = false;
 	bool finishJump = false;
+	bool crashEnemy = false;
 	//enemy
 	bool enemyWalk = true;
 	sf::Clock cl;
