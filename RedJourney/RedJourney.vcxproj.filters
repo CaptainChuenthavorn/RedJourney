@@ -33,9 +33,6 @@
     <ClCompile Include="..\..\RedReborn\RedReborn\enemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\RedReborn\RedReborn\Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\RedReborn\RedReborn\hitbox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

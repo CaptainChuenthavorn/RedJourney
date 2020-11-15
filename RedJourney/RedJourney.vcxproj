@@ -25,7 +25,6 @@
     <ClCompile Include="..\..\RedReborn\RedReborn\Bullet.cpp" />
     <ClCompile Include="..\..\RedReborn\RedReborn\Collider.cpp" />
     <ClCompile Include="..\..\RedReborn\RedReborn\enemy.cpp" />
-    <ClCompile Include="..\..\RedReborn\RedReborn\Game.cpp" />
     <ClCompile Include="..\..\RedReborn\RedReborn\hitbox.cpp" />
     <ClCompile Include="..\..\RedReborn\RedReborn\Item.cpp" />
     <ClCompile Include="..\..\RedReborn\RedReborn\Main.cpp" />
