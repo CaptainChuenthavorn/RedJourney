@@ -30,7 +30,6 @@
     <ClCompile Include="..\..\RedReborn\RedReborn\Main.cpp" />
     <ClCompile Include="..\..\RedReborn\RedReborn\Platform.cpp" />
     <ClCompile Include="..\..\RedReborn\RedReborn\Player.cpp" />
-    <ClCompile Include="Bitmap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\RedReborn\RedReborn\animation.h" />
@@ -44,7 +43,6 @@
     <ClInclude Include="..\..\RedReborn\RedReborn\Item.h" />
     <ClInclude Include="..\..\RedReborn\RedReborn\Platform.h" />
     <ClInclude Include="..\..\RedReborn\RedReborn\Player.h" />
-    <ClInclude Include="Bitmap.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
