@@ -18,7 +18,7 @@ Boss::Boss(sf::Texture* texture, sf::Vector2u imageCount, float switchTime, floa
 	body.setScale(2.0f, 2.0f);
 
 
-	hitbox.setSize(sf::Vector2f(30.0, 48.0));
+	hitbox.setSize(sf::Vector2f(60.0, 50.0));
 	//hitbox.setSize(sf::Vector2f(42.0, 57.6));
 	hitbox.setOrigin(hitbox.getSize() / 2.0f);
 	hitbox.setPosition(body.getPosition().x, body.getPosition().y);
@@ -39,7 +39,7 @@ void Boss::Update(float deltaTime)
 	velocity.y += 981.0f * deltaTime;
 	//velocity.x += speed;
 	enycl = cl.getElapsedTime().asSeconds();
-
+	//3 6 9
 	if (enycl <= 3.0f)
 	{
 		velocity.x += speed * 0.7;
@@ -80,7 +80,7 @@ void Boss::Update(float deltaTime)
 
 void Boss::Draw(sf::RenderWindow& window)
 {
-	//window.draw(hitbox);
+	window.draw(hitbox);
 	window.draw(body);
 }
 
@@ -122,13 +122,13 @@ void Boss::setHp(int dmg)
 	this->hp -= dmg;
 }
 
-void Boss::setDie(bool isDestroy)
+void Boss::setDie(bool isDie)
 {
 	this->isDieBool = isDie;
 
 }
 
-void Boss::setDieSpawn(bool isDestroySpawn)
+void Boss::setDieSpawn(bool isDieSpawn)
 {
 	this->isDieSpawnBool = isDieSpawn;
 }
